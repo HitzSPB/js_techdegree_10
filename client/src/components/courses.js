@@ -1,5 +1,6 @@
 // Import
 import React, { useState, useEffect  } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Courses = (props) => {
 
@@ -11,10 +12,10 @@ const Courses = (props) => {
     }, [])
     return(
            <div class="wrap main--grid">
-               {state.map( item =><a class="course--module course--link" href="course-detail.html" id={item.id}>
+               {state.map( item => <NavLink to={`/courses/${item.id}`} className="course--module course--link">
                         <h2 class="course--label">Course</h2>
                         <h3 class="course--title">{item.title}</h3>
-                    </a>)}
+                        </NavLink>)}
                     <a class="course--module course--add--module" href="create-course.html">
                         <span class="course--add--title">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"

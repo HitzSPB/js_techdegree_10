@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect  } from 'react';
+
 
 const CourseDetail = (props) => {
-
     const [state, setState] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/api/courses/${props.id}`).then(
+        fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(
             res => res.json()).then( data => setState(data)
         )
     }, [])
+    console.log("state:: " + state);
     return (
 <main>
             <div class="actions--bar">
@@ -19,7 +20,7 @@ const CourseDetail = (props) => {
             </div>
             
             <div class="wrap">
-                <h2>Course Detail</h2>
+                {state.map(item => <h2>{item.title}</h2>)}
                 <form>
                     <div class="main--flex">
                         <div>
