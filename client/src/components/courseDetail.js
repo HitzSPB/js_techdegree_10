@@ -1,6 +1,13 @@
 import React from 'react';
 
-const courseDetail = () => {
+const CourseDetail = (props) => {
+
+    const [state, setState] = useState([])
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/courses/${props.id}`).then(
+            res => res.json()).then( data => setState(data)
+        )
+    }, [])
     return (
 <main>
             <div class="actions--bar">
