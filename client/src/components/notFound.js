@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Error = () => {
+const NotFound = () => {
     return (
         <main>
             <div class="wrap">
@@ -8,7 +8,7 @@ const Error = () => {
                 <p>Sorry! We couldn't find the page you're looking for.</p>
             </div>
         </main>
-        )
-    };
+    )
+};
 
-export default Error
+export default NotFound

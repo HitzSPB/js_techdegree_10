@@ -61,7 +61,14 @@ function asyncHandler(cb){
         ],
         attributes: { exclude: ["createdAt", "updatedAt"] },
     })
-    res.status(200).json(course);  
+   if(course === null)
+   {
+     res.status(404).end();
+   }
+   else
+   {
+     res.status(200).json(course);  
+   }
       }
     )
   );

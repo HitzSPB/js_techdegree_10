@@ -8,7 +8,7 @@ const Error = () => {
                 <p>Sorry! We just encountered an unexpected error.</p>
             </div>
         </main>
-        )
-    };
+    )
+};
 
 export default Error

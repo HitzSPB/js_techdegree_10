@@ -1,16 +1,18 @@
 
-import React, { useState, useEffect  }  from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { cookies, useCookies } from 'react-cookie'
+import { useCookies } from 'react-cookie'
 
 const SignOut = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['username', 'userpassword'])
+    const [cookies, setCookie, removeCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
     useEffect(() => {
         removeCookie("username");
         removeCookie("userpassword");
+        removeCookie("userinfo");
+        removeCookie("userid");
     }, [])
-   return (
-          <Redirect to="/" />  
+    return (
+        <Redirect to="/" />
     )
 };
 

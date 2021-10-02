@@ -3,13 +3,13 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
-const PrivateRoute = ({component: Component, ...rest}) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
     const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo'])
     return (
         <Route {...rest} render={props => (
             cookies.username !== undefined ?
                 <Component {...props} />
-            : <Redirect to="/sign-in" />
+                : <Redirect to="/sign-in" />
         )} />
     );
 };

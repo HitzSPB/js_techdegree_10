@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCookies } from 'react-cookie'
 
@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie'
 
 const CreateCourse = (props) => {
     const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
-    const [state, setState] = useState([{data : []}]);
+    const [state, setState] = useState([{ data: [] }]);
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
@@ -20,51 +20,49 @@ const CreateCourse = (props) => {
         input.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-            'Authorization': 'Basic '+btoa(`${cookies.username}:${cookies.userpassword}`)},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(`${cookies.username}:${cookies.userpassword}`)
+            },
             body: JSON.stringify({
-                title : courseTitle,
-                description : courseDescription,
-                estimatedTime : estimatedTime,
-                materialsNeeded : materialsNeeded
-        })
-         
+                title: courseTitle,
+                description: courseDescription,
+                estimatedTime: estimatedTime,
+                materialsNeeded: materialsNeeded
+            })
+
         }
         fetch('http://localhost:5000/api/courses', requestOptions)
-            .then(async response =>{
-                if(!response.ok)
-                {
+            .then(async response => {
+                if (!response.ok) {
                     const json = await response.json()
-                    if(response.status == 400)
-                    {
-                        await setState({data : json })
+                    if (response.status == 400) {
+                        await setState({ data: json })
                     }
-                    else
-                    {
-                     console.log(response);
+                    else {
+                        props.history.push("/error");
                     }
                 }
-                else
-                {                    
+                else {
                     props.history.push("/");
                 }
             });
     };
 
     return (
-    <main>
+        <main>
             <div className="wrap">
                 <h2>Create Course</h2>
-                {state.data?.length > 0? ( <div className="validation--errors">
+                {state.data?.length > 0 ? (<div className="validation--errors">
                     <h3>Validation Errors</h3>
                     <ul>{state.data.map(item => <li>{item}</li>)}
                     </ul>
-                </div>):("")}
+                </div>) : ("")}
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" value={courseTitle} onChange={(e) => {setCourseTitle(e.target.value)}}/>
+                            <input id="courseTitle" name="courseTitle" type="text" value={courseTitle} onChange={(e) => { setCourseTitle(e.target.value) }} />
 
                             <p>By {cookies.userinfo}</p>
 
@@ -73,7 +71,7 @@ const CreateCourse = (props) => {
                         </div>
                         <div>
                             <label for="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" onChange={(e) => setEstimatedTime(e.target.value)}/>
+                            <input id="estimatedTime" name="estimatedTime" type="text" onChange={(e) => setEstimatedTime(e.target.value)} />
 
                             <label for="materialsNeeded">Materials Needed</label>
                             <textarea id="materialsNeeded" name="materialsNeeded" onChange={(e) => setMaterialsNeeded(e.target.value)}></textarea>
@@ -83,7 +81,7 @@ const CreateCourse = (props) => {
                 </form>
             </div>
         </main>
-        )
-    };
+    )
+};
 
 export default CreateCourse

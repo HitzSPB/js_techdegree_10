@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Error = () => {
+const Forbindden = () => {
     return (
         <main>
             <div class="wrap">
@@ -8,7 +8,7 @@ const Error = () => {
                 <p>Oh oh! You can't access this page.</p>
             </div>
         </main>
-        )
-    };
+    )
+};
 
-export default Error
+export default Forbindden
