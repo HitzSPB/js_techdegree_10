@@ -12,7 +12,7 @@ const Courses = (props) => {
     }, [])
     return(
            <div class="wrap main--grid">
-               {state.map( item => <NavLink to={`/courses/${item.id}`} className="course--module course--link">
+               {state.map( item => <NavLink to={`/courses/${item.id}`} className="course--module course--link" key={item.id}>
                         <h2 class="course--label">Course</h2>
                         <h3 class="course--title">{item.title}</h3>
                         </NavLink>)}

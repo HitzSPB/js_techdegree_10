@@ -24,7 +24,7 @@ function App() {
       <Switch>
         <Route exact path="/" render={() => <Courses />} />
         <Route exact path="/courses/create" render={() => <CreateCourse />} />
-        <Route exact path="/courses/:id" render={() => <CourseDetail />} />
+        <Route exact path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
       </Switch>
     </div>
   </BrowserRouter>

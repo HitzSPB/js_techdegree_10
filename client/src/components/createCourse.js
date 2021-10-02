@@ -1,6 +1,12 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+const handleSubmit = (input) => {
+    console.log("test");
+}
 
 const createCourse = () => {
+
     return (
     <main>
             <div class="wrap">
@@ -12,7 +18,7 @@ const createCourse = () => {
                         <li>Please provide a value for "Description"</li>
                     </ul>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div class="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
@@ -31,7 +37,7 @@ const createCourse = () => {
                             <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                         </div>
                     </div>
-                    <button class="button" type="submit">Create Course</button><button class="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                    <button class="button" type="submit">Create Course</button><NavLink to="/"><button class="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></NavLink>
                 </form>
             </div>
         </main>
