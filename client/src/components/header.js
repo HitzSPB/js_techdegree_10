@@ -6,7 +6,7 @@ const Header = () => {
     const [cookies] = useCookies(['username', 'userpassword', 'userinfo'])
     return (
         <header>
-            <div class="wrap header--flex">
+            <div className="wrap header--flex">
                 <NavLink to='/'><h1 className="header--logo">Courses</h1></NavLink>
                 <nav>
                     {cookies?.username === undefined ? (

@@ -15,17 +15,15 @@ const UpdateCourse = (props) => {
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
     const [userInfo, setUserInfo] = useState("");
-
+    const cancelUrl = `/courses/${props.match.params.id}`
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(async res => {
             if (res.status == 404) {
                 props.history.push("/notfound");
             }
-            if (res.status.ok) {
-                console.log("dowe enter")
+            console.log(res.status)
+            if (res.status == 200) {
                 let jsonData = await res.json();
-
-
                 if (jsonData.user.id != cookies.userid) {
                     props.history.push("/forbidden");
                 }
@@ -106,7 +104,7 @@ const UpdateCourse = (props) => {
                             <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={(e) => setMaterialsNeeded(e.target.value)}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button><NavLink to="/"><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></NavLink>
+                    <button className="button" type="submit">Update Course</button><NavLink to={cancelUrl}><button className="button button-secondary" >Cancel</button></NavLink>
                 </form>
             </div>
         </main>

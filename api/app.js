@@ -18,6 +18,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use('/api', users);
 app.use('/api', courses);
+app.disable('etag');
 
 // Testing DB Connection
 (async () => {
