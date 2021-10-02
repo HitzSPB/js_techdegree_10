@@ -30,6 +30,7 @@ function App() {
           <Route exact path="/sign-up" render={(props) => <UserSignUp {...props}  />} />
           <Route exact path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
           <Route exact path="/courses/:id/update" render={(props) => <UpdateCourse {...props} />} />
+          <Route exact path="/sign-out" render={(props) => <UserSignOut {...props}  />} />
         </Switch>
       </div>
     </BrowserRouter>

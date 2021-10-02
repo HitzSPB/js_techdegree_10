@@ -1,10 +1,12 @@
 import React, { useState, useEffect  } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useCookies } from 'react-cookie'
 
 const SignIn = (props) => {
     const [state, setState] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
 
     const handleSubmit = (input) => {
         input.preventDefault();
@@ -31,7 +33,13 @@ const SignIn = (props) => {
                 }
             }
             else
-            {                    
+            {
+                const jsonData = await response.json();
+                console.log(jsonData);
+                setCookie('userinfo', `${jsonData.firstName} ${jsonData.lastName}`, { path: '/'})
+                setCookie('username', email, { path: '/'})
+                setCookie('userpassword', password, {path: '/'})    
+                setCookie('userid', jsonData.id, {path: '/'})    
                 props.history.push("/");
             }
         });

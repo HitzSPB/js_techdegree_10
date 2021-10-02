@@ -1,5 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { NavLink } from 'react-router-dom';
+import { useCookies } from 'react-cookie'
 
 
 // https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
@@ -7,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 // https://dev.to/ahmedsarhan/react-hook-form-a-fast-performant-and-easy-way-to-manage-your-forms-in-your-react-js-apps-5em6
 
 const CreateCourse = (props) => {
+    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
     const [state, setState] = useState([{data : []}]);
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
@@ -19,7 +21,7 @@ const CreateCourse = (props) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json',
-            'Authorization': 'Basic '+btoa('joe@smith.com:joepassword')},
+            'Authorization': 'Basic '+btoa(`${cookies.username}:${cookies.userpassword}`)},
             body: JSON.stringify({
                 title : courseTitle,
                 description : courseDescription,
@@ -28,8 +30,6 @@ const CreateCourse = (props) => {
         })
          
         }
-
-        console.log(requestOptions)
         fetch('http://localhost:5000/api/courses', requestOptions)
             .then(async response =>{
                 if(!response.ok)
@@ -66,7 +66,7 @@ const CreateCourse = (props) => {
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" value={courseTitle} onChange={(e) => {setCourseTitle(e.target.value)}}/>
 
-                            <p>By Joe Smith</p>
+                            <p>By {cookies.userinfo}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" onChange={(e) => setCourseDescription(e.target.value)}></textarea>

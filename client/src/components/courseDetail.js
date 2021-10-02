@@ -1,8 +1,10 @@
 import React, { useState, useEffect  } from 'react';
 import { NavLink } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
+import { useCookies } from 'react-cookie'
 
 const CourseDetail = (props) => {
+    const [cookies, setCookie] = useCookies(['username', 'userpassword'])
     const [state, setState] = useState([])
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(
@@ -15,7 +17,7 @@ const CourseDetail = (props) => {
         const requestOptions = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json',
-            'Authorization': 'Basic '+btoa('joe@smith.com:joepassword')},
+            'Authorization': 'Basic '+btoa(`${cookies.username}:${cookies.userpassword}`)},
         }
 
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`, requestOptions)
@@ -33,11 +35,12 @@ const CourseDetail = (props) => {
     return (
     <main>
             <div class="actions--bar">
-                <div class="wrap">
+                    {state?.user?.id === 10?(
+                        <div class="wrap">
                     <NavLink to={`/courses/${props.match.params.id}/update`} className="button">Update Course</NavLink>
                     <button class="button" onClick={handleRemove}>Delete Course</button>
                     <NavLink to='/' className="button button-secondary">Return to List</NavLink>
-                </div>
+                    </div>):(<div class="wrap"><NavLink to='/' className="button button-secondary">Return to List</NavLink></div>)}
             </div>
             
             <div class="wrap">

@@ -1,7 +1,9 @@
 import React, { useState, useEffect  } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const SignUp = (props) => {
+    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo'])
     const [state, setState] = useState([{data : []}]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -39,12 +41,43 @@ const SignUp = (props) => {
                     }
                 }
                 else
-                {                    
-                    props.history.push("/");
-                }
-            });
-    };
-
+                {                   
+                    const requestSignInOptions = {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json',
+                        'Authorization': 'Basic '+btoa(`${email}:${password}`)},         
+                    }
+            
+                    fetch('http://localhost:5000/api/users', requestSignInOptions)
+                    .then(async response =>{
+                        if(!response.ok)
+                        {
+                            const json = await response.json()
+                            if(response.status == 401)
+                            {
+                                console.log(json);
+                                await setState("The combination of Username and password did not match a user")
+                            }
+                            else
+                            {
+                             console.log(response);
+                            }
+                        }
+                        else
+                        {
+                            const jsonData = await response.json();
+                            console.log(jsonData);
+                            setCookie('userinfo', `${jsonData.firstName} ${jsonData.lastName}`, { path: '/'})
+                            setCookie('username', email, { path: '/'})
+                            setCookie('userpassword', password, {path: '/'})    
+                            setCookie('userid', jsonData.id, {path: '/'})    
+                            props.history.push("/");
+                        }
+                    
+                    })
+            }
+    });
+    }
     return (
         <main>
             <div class="form--centered">
