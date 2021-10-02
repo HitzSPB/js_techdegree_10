@@ -24,7 +24,6 @@ const SignIn = (props) => {
                 const json = await response.json()
                 if(response.status == 401)
                 {
-                    console.log(json);
                     await setState("The combination of Username and password did not match a user")
                 }
                 else
@@ -35,7 +34,6 @@ const SignIn = (props) => {
             else
             {
                 const jsonData = await response.json();
-                console.log(jsonData);
                 setCookie('userinfo', `${jsonData.firstName} ${jsonData.lastName}`, { path: '/'})
                 setCookie('username', email, { path: '/'})
                 setCookie('userpassword', password, {path: '/'})    
