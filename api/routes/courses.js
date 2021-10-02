@@ -34,6 +34,7 @@ function asyncHandler(cb){
   }));
 
   router.post('/courses', authenticateUser, asyncHandler(async(req, res) => {
+    console.log(req.body);
       try{
           const courseInfo = req.body;
           courseInfo.userId = req.currentUser.id
