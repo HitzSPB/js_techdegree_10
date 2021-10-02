@@ -8,7 +8,7 @@ const Header = () => {
             <NavLink to='/'><h1 className="header--logo">Courses</h1></NavLink>
                 <nav>
                     <ul className="header--signedout">
-                        <li><a href="sign-up.html">Sign Up</a></li>
+                        <li><NavLink to="/sign-up">Sign up</NavLink></li>
                         <li><NavLink to="/sign-in">Sign In</NavLink></li>
                     </ul>
                 </nav>

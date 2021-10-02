@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const SignIn = (props) => {
-
+    const [state, setState] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -16,22 +16,38 @@ const SignIn = (props) => {
 
         console.log(requestOptions)
         fetch('http://localhost:5000/api/users', requestOptions)
-            .then(async response =>{
-                if(!response.ok)
+        .then(async response =>{
+            if(!response.ok)
+            {
+                const json = await response.json()
+                if(response.status == 401)
                 {
-                    console.log(response);
+                    console.log(json);
+                    await setState("The combination of Username and password did not match a user")
                 }
                 else
-                {                    
-                    props.history.push("/");
+                {
+                 console.log(response);
                 }
-            });
-    };
+            }
+            else
+            {                    
+                props.history.push("/");
+            }
+        });
+};
 
     return (<div class="form--centered">
                 <h2>Sign In</h2>
                 
                 <form onSubmit={handleSubmit}>
+                    
+                {state !== ""? ( <div className="validation--errors">
+                    <h3>Validation Errors</h3>
+                    <ul><li>{state}</li>
+                    </ul>
+                </div>):("")}
+
                     <label for="emailAddress">Email Address</label>
                     <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => {setEmail(e.target.value)}} />
                     <label for="password">Password</label>
