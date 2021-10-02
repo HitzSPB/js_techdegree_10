@@ -15,11 +15,9 @@ import UserSignIn from './components/signIn';
 import Forbidden from './components/forbidden';
 import UserSignOut from './components/signOut';
 import NotFound from './components/notFound';
-import { UserProvider } from './components/Context';
 
 function App() {
   return (
-    <UserProvider>
       <BrowserRouter>
       <div>
         <Header />
@@ -34,7 +32,6 @@ function App() {
         </Switch>
       </div>
     </BrowserRouter>
-  </UserProvider>
   );
 }
 
