@@ -1,5 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { NavLink } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown'
 
 const CourseDetail = (props) => {
     const [state, setState] = useState([])
@@ -47,16 +48,14 @@ const CourseDetail = (props) => {
                             <h3 class="course--detail--title">Course</h3>
                             <h4 class="course--name">{state?.title ?? ""}</h4>
                             <p>By {state?.user?.firstName ?? ""} {state?.user?.lastName ?? ""}</p>
-
-                            <p>{state?.description ?? ""}</p>
-                            
+                            <ReactMarkdown>{state?.description ?? ""}</ReactMarkdown>
                             </div>
                         <div>
                             <h3 class="course--detail--title">Estimated Time</h3>
                             <p>{state?.estimatedTime ?? ""}</p>
 
                             <h3 class="course--detail--title">Materials Needed</h3>
-                            {state?.materialsNeeded ?? ""}
+                            <ReactMarkdown>{state?.materialsNeeded ?? ""}</ReactMarkdown>
                         </div>
                     </div>
                 </form>
