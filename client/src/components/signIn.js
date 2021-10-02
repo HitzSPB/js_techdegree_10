@@ -16,8 +16,6 @@ const SignIn = (props) => {
                 'Authorization': 'Basic ' + btoa(`${email}:${password}`)
             },
         }
-
-        console.log(requestOptions)
         fetch('http://localhost:5000/api/users', requestOptions)
             .then(async response => {
                 if (!response.ok) {
@@ -50,9 +48,9 @@ const SignIn = (props) => {
                 </ul>
             </div>) : ("")}
 
-            <label for="emailAddress">Email Address</label>
+            <label htmlFor="emailAddress">Email Address</label>
             <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => { setEmail(e.target.value) }} />
-            <label for="password">Password</label>
+            <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
             <button className="button" type="submit">Sign In</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
         </form>

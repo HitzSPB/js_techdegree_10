@@ -61,19 +61,19 @@ const CreateCourse = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>
-                            <label for="courseTitle">Course Title</label>
+                            <label htmlFor="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" value={courseTitle} onChange={(e) => { setCourseTitle(e.target.value) }} />
 
                             <p>By {cookies.userinfo}</p>
 
-                            <label for="courseDescription">Course Description</label>
+                            <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" onChange={(e) => setCourseDescription(e.target.value)}></textarea>
                         </div>
                         <div>
-                            <label for="estimatedTime">Estimated Time</label>
+                            <label htmlFor="estimatedTime">Estimated Time</label>
                             <input id="estimatedTime" name="estimatedTime" type="text" onChange={(e) => setEstimatedTime(e.target.value)} />
 
-                            <label for="materialsNeeded">Materials Needed</label>
+                            <label htmlFor="materialsNeeded">Materials Needed</label>
                             <textarea id="materialsNeeded" name="materialsNeeded" onChange={(e) => setMaterialsNeeded(e.target.value)}></textarea>
                         </div>
                     </div>
