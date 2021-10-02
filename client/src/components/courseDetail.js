@@ -29,7 +29,6 @@ const CourseDetail = (props) => {
                 }
             });
     }
-     console.log(state);
     return (
     <main>
             <div class="actions--bar">
