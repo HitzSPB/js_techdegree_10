@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from 'react';
-
+import { NavLink } from 'react-router-dom';
 
 const CourseDetail = (props) => {
     const [state, setState] = useState([])
@@ -9,14 +9,34 @@ const CourseDetail = (props) => {
         )
     }, [])
 
+    const handleRemove = (e) => {
+        e.preventDefault();
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json',
+            'Authorization': 'Basic '+btoa('joe@smith.com:joepassword')},
+        }
+
+        fetch(`http://localhost:5000/api/courses/${props.match.params.id}`, requestOptions)
+            .then(async response =>{
+                if(!response.ok)
+                {
+                    console.log(response);
+                }
+                else
+                {                    
+                    props.history.push("/");
+                }
+            });
+    }
      console.log(state);
     return (
-<main>
+    <main>
             <div class="actions--bar">
                 <div class="wrap">
-                    <a class="button" href="update-course.html">Update Course</a>
-                    <a class="button" href="#">Delete Course</a>
-                    <a class="button button-secondary" href="index.html">Return to List</a>
+                    <NavLink to={`/courses/${props.match.params.id}/update`} className="button">Update Course</NavLink>
+                    <button class="button" onClick={handleRemove}>Delete Course</button>
+                    <NavLink to='/' className="button button-secondary">Return to List</NavLink>
                 </div>
             </div>
             
