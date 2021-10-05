@@ -36,7 +36,7 @@ const CreateCourse = (props) => {
             .then(async response => {
                 if (!response.ok) {
                     const json = await response.json()
-                    if (response.status == 400) {
+                    if (response.status === 400) {
                         await setState({ data: json })
                     }
                     else {
@@ -55,7 +55,7 @@ const CreateCourse = (props) => {
                 <h2>Create Course</h2>
                 {state.data?.length > 0 ? (<div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul>{state.data.map(item => <li>{item}</li>)}
+                    <ul>{state.data.map((item, i) => <li key={i}>{item}</li>)}
                     </ul>
                 </div>) : ("")}
                 <form onSubmit={handleSubmit}>
@@ -77,7 +77,7 @@ const CreateCourse = (props) => {
                             <textarea id="materialsNeeded" name="materialsNeeded" onChange={(e) => setMaterialsNeeded(e.target.value)}></textarea>
                         </div>
                     </div>
-                    <button className="button" type="submit">Create Course</button><NavLink to="/"><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></NavLink>
+                    <button className="button" type="submit">Create Course</button><NavLink to="/"><button className="button button-secondary">Cancel</button></NavLink>
                 </form>
             </div>
         </main>

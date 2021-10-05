@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie'
+import { NavLink } from 'react-router-dom';
 
 const SignIn = (props) => {
     const [state, setState] = useState("");
@@ -19,7 +20,7 @@ const SignIn = (props) => {
         fetch('http://localhost:5000/api/users', requestOptions)
             .then(async response => {
                 if (!response.ok) {
-                    if (response.status == 401) {
+                    if (response.status === 401) {
                         await setState("The combination of Username and password did not match a user")
                     }
                     else {
@@ -52,7 +53,7 @@ const SignIn = (props) => {
             <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => { setEmail(e.target.value) }} />
             <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
-            <button className="button" type="submit">Sign In</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+            <button className="button" type="submit">Sign In</button><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
         </form>
         <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
 

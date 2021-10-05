@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { NavLink } from 'react-router-dom';
 
 const SignUp = (props) => {
     const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo'])
@@ -12,6 +13,9 @@ const SignUp = (props) => {
 
     const handleSubmit = (input) => {
         input.preventDefault();
+
+        console.log(input);
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -71,7 +75,6 @@ const SignUp = (props) => {
         <main>
             <div className="form--centered">
                 <h2>Sign Up</h2>
-
                 <form onSubmit={handleSubmit}>
 
                     {state.data?.length > 0 ? (<div className="validation--errors">
@@ -87,7 +90,7 @@ const SignUp = (props) => {
                     <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => { setEmail(e.target.value) }} />
                     <label htmlFor="password">Password</label>
                     <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
-                    <button className="button" type="submit">Sign Up</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                    <button className="button" type="submit" onClick={handleSubmit}>Sign Up</button><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
                 </form>
                 <p>Already have a user account? Click here to <a href="sign-in.html">sign in</a>!</p>
             </div>
