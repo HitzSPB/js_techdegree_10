@@ -18,12 +18,12 @@ const UpdateCourse = (props) => {
     const cancelUrl = `/courses/${props.match.params.id}`
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(async res => {
-            if (res.status == 404) {
+            if (res.status === 404) {
                 props.history.push("/notfound");
             }
-            if (res.status == 200) {
+            if (res.status === 200) {
                 let jsonData = await res.json();
-                if (jsonData.user.id != cookies.userid) {
+                if (jsonData.user.id !== cookies.userid) {
                     props.history.push("/forbidden");
                 }
                 setCourseTitle(jsonData.title);
@@ -38,7 +38,7 @@ const UpdateCourse = (props) => {
                 props.history.push("/error");
             }
         })
-    }, [])
+    }, [cookies, props])
 
 
 
@@ -62,7 +62,7 @@ const UpdateCourse = (props) => {
             .then(async response => {
                 if (!response.ok) {
                     const json = await response.json()
-                    if (response.status == 400) {
+                    if (response.status === 400) {
                         await setState({ data: json })
                     }
                     else {

@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie'
 // https://dev.to/ahmedsarhan/react-hook-form-a-fast-performant-and-easy-way-to-manage-your-forms-in-your-react-js-apps-5em6
 
 const CreateCourse = (props) => {
-    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
+    const [cookies] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
     const [state, setState] = useState([{ data: [] }]);
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");

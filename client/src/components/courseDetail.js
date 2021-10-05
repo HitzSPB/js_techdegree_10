@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import { useCookies } from 'react-cookie'
 
 const CourseDetail = (props) => {
-    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userid'])
+    const [cookies] = useCookies(['username', 'userpassword', 'userid'])
     const [state, setState] = useState([])
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(
@@ -22,7 +22,7 @@ const CourseDetail = (props) => {
 
             }
         )
-    }, [])
+    }, [props])
 
     const handleRemove = (e) => {
         e.preventDefault();
@@ -47,7 +47,7 @@ const CourseDetail = (props) => {
     return (
         <main>
             <div className="actions--bar">
-                {state?.user?.id == cookies?.userid ? (
+                {parseInt(state?.user?.id) === parseInt(cookies?.userid) ? (
                     <div className="wrap">
                         <NavLink to={`/courses/${props.match.params.id}/update`} className="button">Update Course</NavLink>
                         <button className="button" onClick={handleRemove}>Delete Course</button>

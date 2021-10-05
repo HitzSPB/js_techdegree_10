@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo'])
+    const [cookies] = useCookies(['username', 'userpassword', 'userinfo'])
     return (
         <Route {...rest} render={props => (
             cookies.username !== undefined ?

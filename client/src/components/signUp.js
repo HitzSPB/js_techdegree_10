@@ -31,7 +31,7 @@ const SignUp = (props) => {
             .then(async response => {
                 if (!response.ok) {
                     const json = await response.json()
-                    if (response.status == 400) {
+                    if (response.status === 400) {
                         await setState({ data: json })
                     }
                     else {
@@ -50,8 +50,7 @@ const SignUp = (props) => {
                     fetch('http://localhost:5000/api/users', requestSignInOptions)
                         .then(async response => {
                             if (!response.ok) {
-                                const json = await response.json()
-                                if (response.status == 401) {
+                                if (response.status === 401) {
                                     await setState("The combination of Username and password did not match a user")
                                 }
                                 else {
