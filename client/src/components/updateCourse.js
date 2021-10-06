@@ -23,7 +23,7 @@ const UpdateCourse = (props) => {
             }
             if (res.status === 200) {
                 let jsonData = await res.json();
-                if (jsonData.user.id !== cookies.userid) {
+                if (parseInt(jsonData.user.id) !== parseInt(cookies.userid)) {
                     props.history.push("/forbidden");
                 }
                 setCourseTitle(jsonData.title);

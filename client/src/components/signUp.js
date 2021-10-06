@@ -14,8 +14,6 @@ const SignUp = (props) => {
     const handleSubmit = (input) => {
         input.preventDefault();
 
-        console.log(input);
-
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -78,7 +76,7 @@ const SignUp = (props) => {
 
                     {state.data?.length > 0 ? (<div className="validation--errors">
                         <h3>Validation Errors</h3>
-                        <ul>{state.data.map(item => <li>{item}</li>)}
+                        <ul>{state.data.map((item, i) => <li key={i}>{item}</li>)}
                         </ul>
                     </div>) : ("")}
                     <label htmlFor="firstName">First Name</label>
