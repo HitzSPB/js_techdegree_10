@@ -1,47 +1,19 @@
 import React, { useState } from 'react';
-import { useCookies } from 'react-cookie'
 import { NavLink } from 'react-router-dom';
+import { Consumer } from './Context';
 
 const SignIn = (props) => {
     const [state, setState] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
 
-    const handleSubmit = (input) => {
-        input.preventDefault();
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(`${email}:${password}`)
-            },
-        }
-        fetch('http://localhost:5000/api/users', requestOptions)
-            .then(async response => {
-                if (!response.ok) {
-                    if (response.status === 401) {
-                        await setState("The combination of Username and password did not match a user")
-                    }
-                    else {
-                        props.history.push("/error");
-                    }
-                }
-                else {
-                    const jsonData = await response.json();
-                    setCookie('userinfo', `${jsonData.firstName} ${jsonData.lastName}`, { path: '/' })
-                    setCookie('username', email, { path: '/' })
-                    setCookie('userpassword', password, { path: '/' })
-                    setCookie('userid', jsonData.id, { path: '/' })
-                    props.history.goBack();
-                }
-            });
-    };
-
-    return (<div className="form--centered">
+    return (
+    <Consumer>
+        {value => (
+    <div className="form--centered">
         <h2>Sign In</h2>
 
-        <form onSubmit={handleSubmit}>
+        <form>
 
             {state !== "" ? (<div className="validation--errors">
                 <h3>Validation Errors</h3>
@@ -53,11 +25,12 @@ const SignIn = (props) => {
             <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => { setEmail(e.target.value) }} />
             <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
-            <button className="button" type="submit">Sign In</button><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
+            <NavLink to="/"> <button className="button" type="submit" onClick={() => value.login(email, password)}>Sign In</button></NavLink><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
         </form>
         <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
 
-    </div>)
+    </div>)}
+    </Consumer>)
 
 };
 

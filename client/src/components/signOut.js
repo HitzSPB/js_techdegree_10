@@ -1,18 +1,15 @@
 
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
-import { useCookies } from 'react-cookie'
+import { Redirect } from 'react-router-dom';
+import { Consumer } from './Context';
 
 const SignOut = (props) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
 
-    removeCookie("username");
-    removeCookie("userpassword");
-    removeCookie("userinfo");
-    removeCookie("userid");
-    props.history.push("/")
     return (
-        <p>Signing you out</p>
+        <div>
+        <Consumer>{value => value.logout()}</Consumer>
+        <Redirect to="/" />
+        </div>
     )
 };
 
