@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Consumer } from './Context';
+import { Consumer, UserContext } from './Context';
 
 // https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
 // https://stackoverflow.com/questions/30203044/using-an-authorization-header-with-fetch-in-react-native
@@ -12,7 +12,8 @@ const CreateCourse = (props) => {
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
-
+    
+    const {currentUser, handleLogin} = useContext(UserContext);
 
     const handleSubmit = (input) => {
         input.preventDefault();
