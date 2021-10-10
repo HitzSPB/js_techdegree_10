@@ -1,73 +1,19 @@
-import React, { useState } from 'react';
-import { useCookies } from 'react-cookie';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { UserContext } from './Context';
 const SignUp = (props) => {
-    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo'])
     const [state, setState] = useState([{ data: [] }]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const {userSignUp} = useContext(UserContext);
 
     const handleSubmit = (input) => {
         input.preventDefault();
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                emailAddress: email,
-                password: password
-            })
-
-        }
-        fetch('http://localhost:5000/api/users', requestOptions)
-            .then(async response => {
-                if (!response.ok) {
-                    const json = await response.json()
-                    if (response.status === 400) {
-                        await setState({ data: json })
-                    }
-                    else {
-                        props.history.push("/error");
-                    }
-                }
-                else {
-                    const requestSignInOptions = {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Basic ' + btoa(`${email}:${password}`)
-                        },
-                    }
-
-                    fetch('http://localhost:5000/api/users', requestSignInOptions)
-                        .then(async response => {
-                            if (!response.ok) {
-                                if (response.status === 401) {
-                                    await setState("The combination of Username and password did not match a user")
-                                }
-                                else {
-                                    props.history.push("/error");
-                                }
-                            }
-                            else {
-                                const jsonData = await response.json();
-                                setCookie('userinfo', `${jsonData.firstName} ${jsonData.lastName}`, { path: '/' })
-                                setCookie('username', email, { path: '/' })
-                                setCookie('userpassword', password, { path: '/' })
-                                setCookie('userid', jsonData.id, { path: '/' })
-                                props.history.push("/");
-                            }
-
-                        })
-                }
-            });
+        userSignUp(firstName, lastName, email, password)
     }
+
     return (
         <main>
             <div className="form--centered">

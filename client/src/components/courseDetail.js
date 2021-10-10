@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown'
-import { useCookies } from 'react-cookie'
-
+import { UserContext } from './Context';
 const CourseDetail = (props) => {
-    const [cookies] = useCookies(['username', 'userpassword', 'userid'])
+    const {currentUser} = useContext(UserContext);
     const [state, setState] = useState([])
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(
@@ -30,7 +29,7 @@ const CourseDetail = (props) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(`${cookies.username}:${cookies.userpassword}`)
+                'Authorization': 'Basic ' + btoa(`${currentUser.username}:${currentUser.userpassword}`)
             },
         }
 
@@ -47,7 +46,7 @@ const CourseDetail = (props) => {
     return (
         <main>
             <div className="actions--bar">
-                {parseInt(state?.user?.id) === parseInt(cookies?.userid) ? (
+                {parseInt(state?.user?.id) === parseInt(currentUser?.userid) ? (
                     <div className="wrap">
                         <NavLink to={`/courses/${props.match.params.id}/update`} className="button">Update Course</NavLink>
                         <button className="button" onClick={handleRemove}>Delete Course</button>

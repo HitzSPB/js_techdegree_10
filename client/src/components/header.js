@@ -1,20 +1,19 @@
-import React from 'react';
+import React, {useContext}from 'react';
 import { NavLink } from 'react-router-dom';
-import { useCookies } from 'react-cookie'
-
+import { UserContext } from './Context';
 const Header = () => {
-    const [cookies] = useCookies(['username', 'userpassword', 'userinfo'])
+    const {currentUser} = useContext(UserContext);
     return (
         <header>
             <div className="wrap header--flex">
                 <NavLink to='/'><h1 className="header--logo">Courses</h1></NavLink>
                 <nav>
-                    {cookies?.username === undefined ? (
+                    {currentUser?.username === "" ? (
                         <ul className="header--signedout">
                             <li><NavLink to="/sign-up">Sign up</NavLink></li>
                             <li><NavLink to="/sign-in">Sign In</NavLink></li></ul>
                     ) : (<ul className="header--signedout">
-                        <li>Welcome, {cookies.userinfo}!</li>
+                        <li>Welcome, {currentUser.userinfo}!</li>
                         <li><NavLink to="/sign-out">Sign Out</NavLink></li></ul>)}
                 </nav>
             </div>

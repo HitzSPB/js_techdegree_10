@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Consumer, UserContext } from './Context';
+import { UserContext } from './Context';
 
 // https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
 // https://stackoverflow.com/questions/30203044/using-an-authorization-header-with-fetch-in-react-native
@@ -13,8 +13,8 @@ const CreateCourse = (props) => {
     const [estimatedTime, setEstimatedTime] = useState("");
     const [materialsNeeded, setMaterialsNeeded] = useState("");
     
-    const {currentUser, handleLogin} = useContext(UserContext);
-
+    const {currentUser} = useContext(UserContext);
+    
     const handleSubmit = (input) => {
         input.preventDefault();
         console.log(props.value)
@@ -22,7 +22,7 @@ const CreateCourse = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(`${props.value.state.username}:${props.value.state.userpassword}`)
+                'Authorization': 'Basic ' + btoa(`${currentUser.username}:${currentUser.userpassword}`)
             },
             body: JSON.stringify({
                 title: courseTitle,
@@ -50,8 +50,6 @@ const CreateCourse = (props) => {
     };
 
     return (
-        <Consumer>
-            {value => (
             <main>
                 <div className="wrap">
                     <h2>Create Course</h2>
@@ -66,7 +64,7 @@ const CreateCourse = (props) => {
                                 <label htmlFor="courseTitle">Course Title</label>
                                 <input id="courseTitle" name="courseTitle" type="text" value={courseTitle} onChange={(e) => { setCourseTitle(e.target.value) }} />
 
-                                <p>By {value.state.userinfo}</p>
+                                <p>By {currentUser.userinfo}</p>
 
                                 <label htmlFor="courseDescription">Course Description</label>
                                 <textarea id="courseDescription" name="courseDescription" onChange={(e) => setCourseDescription(e.target.value)}></textarea>
@@ -82,8 +80,7 @@ const CreateCourse = (props) => {
                         <button className="button" type="submit">Create Course</button><NavLink to="/"><button className="button button-secondary">Cancel</button></NavLink>
                     </form>
                 </div>
-            </main>)}
-        </Consumer>
+            </main>
     )
 };
 

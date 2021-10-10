@@ -1,13 +1,13 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Consumer } from './Context';
+import { UserContext } from './Context';
 
 const SignOut = (props) => {
-
+    const {logout} = useContext(UserContext);
+    logout()
     return (
         <div>
-        <Consumer>{value => value.logout()}</Consumer>
         <Redirect to="/" />
         </div>
     )

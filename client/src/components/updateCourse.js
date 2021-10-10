@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-
+import { UserContext } from './Context';
 
 // https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
 // https://stackoverflow.com/questions/30203044/using-an-authorization-header-with-fetch-in-react-native
 // https://dev.to/ahmedsarhan/react-hook-form-a-fast-performant-and-easy-way-to-manage-your-forms-in-your-react-js-apps-5em6
 
 const UpdateCourse = (props) => {
-    const [cookies, setCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
     const [state, setState] = useState([{ data: [] }]);
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
@@ -16,6 +14,9 @@ const UpdateCourse = (props) => {
     const [materialsNeeded, setMaterialsNeeded] = useState("");
     const [userInfo, setUserInfo] = useState("");
     const cancelUrl = `/courses/${props.match.params.id}`
+    const {currentUser} = useContext(UserContext);
+
+    console.log(currentUser);
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(async res => {
             if (res.status === 404) {
@@ -23,7 +24,7 @@ const UpdateCourse = (props) => {
             }
             if (res.status === 200) {
                 let jsonData = await res.json();
-                if (parseInt(jsonData.user.id) !== parseInt(cookies.userid)) {
+                if (parseInt(jsonData.user.id) !== parseInt(currentUser.userid)) {
                     props.history.push("/forbidden");
                 }
                 setCourseTitle(jsonData.title);
@@ -38,7 +39,7 @@ const UpdateCourse = (props) => {
                 props.history.push("/error");
             }
         })
-    }, [cookies, props])
+    }, [currentUser, props])
 
 
 
@@ -48,7 +49,7 @@ const UpdateCourse = (props) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(`${cookies.username}:${cookies.userpassword}`)
+                'Authorization': 'Basic ' + btoa(`${currentUser.username}:${currentUser.userpassword}`)
             },
             body: JSON.stringify({
                 title: courseTitle,

@@ -1,13 +1,12 @@
 //https://medium.com/@thanhbinh.tran93/private-route-public-route-and-restricted-route-with-react-router-d50b27c15f5e
-import React from 'react';
+import React, {useContext} from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-
+import { UserContext } from './Context';
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const [cookies] = useCookies(['username', 'userpassword', 'userinfo'])
+    const {currentUser} = useContext(UserContext);
     return (
         <Route {...rest} render={props => (
-            cookies.username !== undefined ?
+            currentUser.username !== "" ?
                 <Component {...props} />
                 : <Redirect to="/sign-in" />
         )} />
