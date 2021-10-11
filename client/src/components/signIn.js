@@ -6,34 +6,42 @@ const SignIn = (props) => {
     const [state, setState] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {login} = useContext(UserContext);
-    const handleSubmit = (input) => {
+    const { login } = useContext(UserContext);
+    const handleSubmit = async (input) => {
         input.preventDefault();
-       var result = login(email, password)
-       console.log(result)
+        let result = await login(email, password)
+        if (result.statusCode === 200) {
+            props.history.goBack();
+        }
+        else if (result.statusCode === 401) {
+            setState(result.error)
+        }
+        else {
+            props.history.push("/error");
+        }
     }
     return (
 
-    <div className="form--centered">
-        <h2>Sign In</h2>
+        <div className="form--centered">
+            <h2>Sign In</h2>
 
-        <form>
+            <form>
 
-            {state !== "" ? (<div className="validation--errors">
-                <h3>Validation Errors</h3>
-                <ul><li>{state}</li>
-                </ul>
-            </div>) : ("")}
+                {state !== "" ? (<div className="validation--errors">
+                    <h3>Validation Errors</h3>
+                    <ul><li>{state}</li>
+                    </ul>
+                </div>) : ("")}
 
-            <label htmlFor="emailAddress">Email Address</label>
-            <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => { setEmail(e.target.value) }} />
-            <label htmlFor="password">Password</label>
-            <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
-            <NavLink to="/"> <button className="button" type="submit" onClick={handleSubmit}>Sign In</button></NavLink><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
-        </form>
-        <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
+                <label htmlFor="emailAddress">Email Address</label>
+                <input id="emailAddress" name="emailAddress" type="email" onChange={(e) => { setEmail(e.target.value) }} />
+                <label htmlFor="password">Password</label>
+                <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
+                <NavLink to="/"> <button className="button" type="submit" onClick={handleSubmit}>Sign In</button></NavLink><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
+            </form>
+            <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
 
-    </div>)
+        </div>)
 
 };
 

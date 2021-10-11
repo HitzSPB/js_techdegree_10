@@ -17,7 +17,6 @@ const CreateCourse = (props) => {
     
     const handleSubmit = (input) => {
         input.preventDefault();
-        console.log(props.value)
         const requestOptions = {
             method: 'POST',
             headers: {

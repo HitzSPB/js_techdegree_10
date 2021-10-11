@@ -17,7 +17,6 @@ export const UserContext = React.createContext({
 export const UserProvider = (props) => {
     //state
     const [cookies, setCookie, removeCookie] = useCookies(['username', 'userpassword', 'userinfo', 'userid'])
-    const [state, setState] = useState("");
     const [userState, setUserState] = useState({    currentUser: {
         username: "",
         userpassword: "",
@@ -28,8 +27,6 @@ export const UserProvider = (props) => {
     //login check
     if(cookies.userid !== undefined && userState.currentUser.username === "")
     {
-        console.log("we etner?")
-        console.log(cookies)
         setUserState({
             currentUser: {
                 username: cookies.username,
@@ -40,7 +37,7 @@ export const UserProvider = (props) => {
         })
     }
     //methods
-    const handleSignUp = (firstName, lastName, email, password) => {
+    const handleSignUp = async (firstName, lastName, email, password) => {
 
         const requestOptions = {
             method: 'POST',
@@ -53,15 +50,15 @@ export const UserProvider = (props) => {
             })
 
         }
-        fetch('http://localhost:5000/api/users', requestOptions)
+        let registerResponse = await fetch('http://localhost:5000/api/users', requestOptions)
             .then(async response => {
                 if (!response.ok) {
                     const json = await response.json()
                     if (response.status === 400) {
-                        await setState({ data: json })
+                        return await {error: json, statusCode: response.status};
                     }
                     else {
-                        props.history.push("/error");
+                        return await {error: "server error", statusCode: response.status};
                     }
                 }
                 else {
@@ -73,14 +70,14 @@ export const UserProvider = (props) => {
                         },
                     }
 
-                    fetch('http://localhost:5000/api/users', requestSignInOptions)
+                    return await fetch('http://localhost:5000/api/users', requestSignInOptions)
                         .then(async response => {
                             if (!response.ok) {
                                 if (response.status === 401) {
-                                    await setState("The combination of Username and password did not match a user")
+                                    return await {error: "The combination of Username and password did not match a user", statusCode: response.status};
                                 }
                                 else {
-                                    props.history.push("/error");
+                                    return await {error: "Server error", statusCode: response.status};
                                 }
                             }
                             else {
@@ -99,15 +96,17 @@ export const UserProvider = (props) => {
                                 setCookie('username', email, { path: '/' })
                                 setCookie('userpassword', password, { path: '/' })
                                 setCookie('userid', jsonData.id, { path: '/' })
-                                // props.history.push("/");
+                                return await {error: "", statusCode: response.status};
                             }
+                            
 
                         })
                 }
             });
+            return registerResponse;
     }
 
-    const handleLogout = () => {
+    const handleLogout = (props) => {
         setUserState({
             currentUser: {
                 username: "",
@@ -122,7 +121,7 @@ export const UserProvider = (props) => {
         removeCookie("userid");
     }
 
-    const handleLogin = (email, password) => {
+    const handleLogin = async (email, password) => {
         const requestOptions = {
             method: 'GET',
             headers: {
@@ -130,15 +129,14 @@ export const UserProvider = (props) => {
                 'Authorization': 'Basic ' + btoa(`${email}:${password}`)
             },
         }
-        fetch('http://localhost:5000/api/users', requestOptions)
+        const response = await fetch('http://localhost:5000/api/users', requestOptions)
             .then(async response => {
                 if (!response.ok) {
                     if (response.status === 401) {
-                        await setState("The combination of Username and password did not match a user")
-                        props.history.push("/sign-in");
+                        return await {error: "The combination of Username and password did not match a user", statusCode: response.status};
                     }
                     else {
-                        props.history.push("/error");
+                        return await {error: "Server error", statusCode: response.status};
                     }
                 }
                 else {
@@ -155,11 +153,10 @@ export const UserProvider = (props) => {
                     setCookie('username', email, { path: '/' })
                     setCookie('userpassword', password, { path: '/' })
                     setCookie('userid', jsonData.id, { path: '/' })
-                    return "happy"
-                    // console.log(userState.user)
-                    // props.history.goBack();
+                    return await {error: "", statusCode: response.status};
                 }
             });
+            return response;
     };
 
 

@@ -7,7 +7,7 @@ import { UserContext } from './Context';
 // https://dev.to/ahmedsarhan/react-hook-form-a-fast-performant-and-easy-way-to-manage-your-forms-in-your-react-js-apps-5em6
 
 const UpdateCourse = (props) => {
-    const [state, setState] = useState([{ data: [] }]);
+    const [errorState, setErrorState] = useState([{ data: [] }]);
     const [courseTitle, setCourseTitle] = useState("");
     const [courseDescription, setCourseDescription] = useState("");
     const [estimatedTime, setEstimatedTime] = useState("");
@@ -16,7 +16,6 @@ const UpdateCourse = (props) => {
     const cancelUrl = `/courses/${props.match.params.id}`
     const {currentUser} = useContext(UserContext);
 
-    console.log(currentUser);
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(async res => {
             if (res.status === 404) {
@@ -64,7 +63,7 @@ const UpdateCourse = (props) => {
                 if (!response.ok) {
                     const json = await response.json()
                     if (response.status === 400) {
-                        await setState({ data: json })
+                        await setErrorState({ data: ["The inserted data could not be handled by the server. Ensure all fields have been correctly filled out"] })
                     }
                     else {
                         props.history.push("/error");
@@ -80,9 +79,9 @@ const UpdateCourse = (props) => {
         <main>
             <div className="wrap">
                 <h2>Update Course</h2>
-                {state.data?.length > 0 ? (<div className="validation--errors">
+                {errorState.data?.length > 0 ? (<div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul>{state.data.map(item => <li>{item}</li>)}
+                    <ul>{errorState.data.map(item => <li>{item}</li>)}
                     </ul>
                 </div>) : ("")}
                 <form onSubmit={handleSubmit}>

@@ -2,16 +2,28 @@ import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { UserContext } from './Context';
 const SignUp = (props) => {
-    const [state, setState] = useState([{ data: [] }]);
+    const [state, setState] = useState([]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {userSignUp} = useContext(UserContext);
 
-    const handleSubmit = (input) => {
+    const handleSubmit = async (input) => {
         input.preventDefault();
-        userSignUp(firstName, lastName, email, password)
+        let result = await userSignUp(firstName, lastName, email, password);
+        if(result.statusCode === 200)
+        {
+            props.history.push("/")
+        }
+        else if(result.statusCode === 400 ||result.statusCode === 401 )
+        {
+            setState(result.error)
+        }
+        else
+        {
+            props.history.push("/error");
+        }
     }
 
     return (
@@ -19,10 +31,9 @@ const SignUp = (props) => {
             <div className="form--centered">
                 <h2>Sign Up</h2>
                 <form onSubmit={handleSubmit}>
-
-                    {state.data?.length > 0 ? (<div className="validation--errors">
+                    {state?.length > 0 ? (<div className="validation--errors">
                         <h3>Validation Errors</h3>
-                        <ul>{state.data.map((item, i) => <li key={i}>{item}</li>)}
+                        <ul>{state?.map((item, i) => <li key={i}>{item}</li>)}
                         </ul>
                     </div>) : ("")}
                     <label htmlFor="firstName">First Name</label>
