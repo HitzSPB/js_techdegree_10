@@ -1,14 +1,18 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { UserContext } from './Context';
 
 const SignOut = (props) => {
-    const {logout} = useContext(UserContext);
-    logout(props)
+    // const {logout} = useContext(UserContext);
+    // useEffect(() => {
+    //     logout(props)
+    // }, [logout, props])
+    // logout(props)
     return (
         <div>
-        <Redirect to="/" />
+            <UserContext.Consumer>{value => value.logout()}</UserContext.Consumer>
+            <Redirect to="/" />
         </div>
     )
 };

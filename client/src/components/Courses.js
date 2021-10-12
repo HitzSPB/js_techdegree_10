@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const Courses = () => {
 
+    // Fetches current list of available courses 
     const [state, setState] = useState([])
     useEffect(() => {
         fetch("http://localhost:5000/api/courses").then(

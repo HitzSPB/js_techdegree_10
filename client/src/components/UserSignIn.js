@@ -11,6 +11,7 @@ const SignIn = (props) => {
         input.preventDefault();
         let result = await login(email, password)
         if (result.statusCode === 200) {
+            // Sends us back to previous url
             props.history.goBack();
         }
         else if (result.statusCode === 401) {

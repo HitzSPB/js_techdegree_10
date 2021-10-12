@@ -5,6 +5,8 @@ import { UserContext } from './Context';
 const CourseDetail = (props) => {
     const {currentUser} = useContext(UserContext);
     const [state, setState] = useState([])
+
+    // Fetch details about the current selected course
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(
             async res => {
@@ -23,6 +25,7 @@ const CourseDetail = (props) => {
         )
     }, [props])
 
+    // Removes current course
     const handleRemove = (e) => {
         e.preventDefault();
         const requestOptions = {
