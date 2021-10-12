@@ -80,7 +80,7 @@ const UpdateCourse = (props) => {
                 <h2>Update Course</h2>
                 {errorState.data?.length > 0 ? (<div className="validation--errors">
                     <h3>Validation Errors</h3>
-                    <ul>{errorState.data.map(item => <li>{item}</li>)}
+                    <ul>{errorState.data.map((item, i) => <li key={i}>{item}</li>)}
                     </ul>
                 </div>) : ("")}
                 <form onSubmit={handleSubmit}>
