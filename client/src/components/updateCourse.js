@@ -61,7 +61,6 @@ const UpdateCourse = (props) => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`, requestOptions)
             .then(async response => {
                 if (!response.ok) {
-                    const json = await response.json()
                     if (response.status === 400) {
                         await setErrorState({ data: ["The inserted data could not be handled by the server. Ensure all fields have been correctly filled out"] })
                     }
