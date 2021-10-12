@@ -41,7 +41,6 @@ const UpdateCourse = (props) => {
         })
     }, [currentUser, props])
 
-
     const handleSubmit = (input) => {
         input.preventDefault();
         const requestOptions = {
