@@ -5,18 +5,18 @@ import './styles/global.css';
 import React from 'react';
 
 // Components
-import Header from './components/header';
-import Courses from './components/courses';
-import CourseDetail from './components/courseDetail';
-import CreateCourse from './components/createCourse';
-import UpdateCourse from './components/updateCourse';
-import UserSignUp from './components/signUp';
-import UserSignIn from './components/signIn';
-import UserSignOut from './components/signOut';
-import PrivateRoute from './components/privateRoute';
-import Forbidden from './components/forbidden';
-import NotFound from './components/notFound';
-import Error from './components/error';
+import Header from './components/Header2';
+import Courses from './components/Courses2';
+import CourseDetail from './components/CourseDetail2';
+import CreateCourse from './components/CreateCourse2';
+import UpdateCourse from './components/UpdateCourse';
+import UserSignUp from './components/UserSignUp';
+import UserSignIn from './components/UserSignIn';
+import UserSignOut from './components/UserSignOut';
+import PrivateRoute from './components/PrivateRoute2';
+import Forbidden from './components/Forbidden2';
+import NotFound from './components/NotFound2';
+import Error from './components/UnhandledError';
 import { UserProvider } from './components/Context';
 
 
