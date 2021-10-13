@@ -1,7 +1,6 @@
 import React from 'react';
 
 const NotFound = () => {
-    console.log("notfound entered")
     return (
         <main>
             <div className="wrap">

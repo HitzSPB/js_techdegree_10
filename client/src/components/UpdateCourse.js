@@ -20,7 +20,6 @@ const UpdateCourse = (props) => {
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(async res => {
             if (res.status === 404) {
-                console.log("do we enter")
                 props.history.push("/notfound");
                 return;
             }
