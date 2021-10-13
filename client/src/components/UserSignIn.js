@@ -48,7 +48,7 @@ const SignIn = (props) => {
                 <input id="password" name="password" type="password" onChange={(e) => { setPassword(e.target.value) }} />
                 <NavLink to="/"> <button className="button" type="submit" onClick={handleSubmit}>Sign In</button></NavLink><NavLink to='/'><button className="button button-secondary">Cancel</button></NavLink>
             </form>
-            <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
+            <p>Don't have a user account? Click here to <NavLink to="/signup">sign up</NavLink>!</p>
 
         </div>)
 
