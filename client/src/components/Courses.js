@@ -2,15 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Courses = () => {
+const Courses = (props) => {
 
     // Fetches current list of available courses 
     const [state, setState] = useState([])
     useEffect(() => {
-        fetch("http://localhost:5000/api/courses").then(
-            res => res.json()).then(data => setState(data)
+        fetch("http://localhost:5000/api/courses").then( async res => 
+            {
+                if(res.status === 500)
+                {
+                    props.history.push("/error");
+                }
+                let json = await res.json()
+                setState(json)
+            }
             )
-    }, [])
+    }, [props])
     return (
         <div className="wrap main--grid">
             {state.map(item => <NavLink to={`/courses/${item.id}`} className="course--module course--link" key={item.id}>

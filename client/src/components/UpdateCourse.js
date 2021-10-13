@@ -20,7 +20,9 @@ const UpdateCourse = (props) => {
     useEffect(() => {
         fetch(`http://localhost:5000/api/courses/${props.match.params.id}`).then(async res => {
             if (res.status === 404) {
+                console.log("do we enter")
                 props.history.push("/notfound");
+                return;
             }
             if (res.status === 200) {
                 let jsonData = await res.json();
@@ -36,6 +38,7 @@ const UpdateCourse = (props) => {
             }
             else
             {
+                console.log("noway")
                 props.history.push("/error");
             }
         })
@@ -61,8 +64,7 @@ const UpdateCourse = (props) => {
             .then(async response => {
                 if (!response.ok) {
                     if (response.status === 400) {
-                        // Sets a default error message as the api server doesn't returns a error message
-                        await setErrorState({ data: ["The inserted data could not be handled by the server. Ensure all fields have been correctly filled out"] })
+                        await setErrorState({ data: [await response.json()] })
                     }
                     else {
                         props.history.push("/error");

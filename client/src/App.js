@@ -27,7 +27,7 @@ const App = (props) => {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path="/" render={() => <Courses />} />
+        <Route exact path="/" render={(props) => <Courses {...props}/>} />
         <PrivateRoute exact path="/courses/create" component={CreateCourse} />
         <Route exact path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
         <PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} />
@@ -36,6 +36,7 @@ const App = (props) => {
         <Route exact path="/signout" render={(props) => <UserSignOut {...props} />} />
         <Route exact path="/forbidden" render={(props) => <Forbidden />} />
         <Route exact path="/error" render={(props) => <Error />} />
+        <Route path="/notfound" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
