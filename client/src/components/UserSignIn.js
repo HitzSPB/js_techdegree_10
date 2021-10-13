@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { UserContext } from './Context';
 
 const SignIn = (props) => {
+    const { from } = props.location.state || { from: { pathname: '/' } };
     const [state, setState] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -12,7 +13,14 @@ const SignIn = (props) => {
         let result = await login(email, password)
         if (result.statusCode === 200) {
             // Sends us back to previous url
-            props.history.goBack();
+            if(from.pathname === "/")
+            {
+                props.history.goBack();
+            }
+            else
+            {
+                props.history.push(from.pathname);
+            }
         }
         else if (result.statusCode === 401) {
             setState(result.error)
