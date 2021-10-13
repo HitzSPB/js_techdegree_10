@@ -31,9 +31,9 @@ const App = (props) => {
         <PrivateRoute exact path="/courses/create" component={CreateCourse} />
         <Route exact path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
         <PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} />
-        <Route exact path="/sign-in" render={(props) => <UserSignIn {...props} />} />
-        <Route exact path="/sign-up" render={(props) => <UserSignUp {...props} />} />
-        <Route exact path="/sign-out" render={(props) => <UserSignOut {...props} />} />
+        <Route exact path="/signin" render={(props) => <UserSignIn {...props} />} />
+        <Route exact path="/signup" render={(props) => <UserSignUp {...props} />} />
+        <Route exact path="/signout" render={(props) => <UserSignOut {...props} />} />
         <Route exact path="/forbidden" render={(props) => <Forbidden />} />
         <Route exact path="/error" render={(props) => <Error />} />
         <Route component={NotFound} />

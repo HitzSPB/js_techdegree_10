@@ -10,11 +10,11 @@ const Header = () => {
                 <nav>
                     {currentUser?.username === "" ? (
                         <ul className="header--signedout">
-                            <li><NavLink to="/sign-up">Sign up</NavLink></li>
-                            <li><NavLink to="/sign-in">Sign In</NavLink></li></ul>
+                            <li><NavLink to="/signup">Sign up</NavLink></li>
+                            <li><NavLink to="/signin">Sign In</NavLink></li></ul>
                     ) : (<ul className="header--signedout">
                         <li>Welcome, {currentUser.userinfo}!</li>
-                        <li><NavLink to="/sign-out">Sign Out</NavLink></li></ul>)}
+                        <li><NavLink to="/signout">Sign Out</NavLink></li></ul>)}
                 </nav>
             </div>
         </header>
