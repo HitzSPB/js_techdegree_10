@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { UserContext } from './Context';
 
-const SignOut = (props) => {
+const SignOut = () => {
     const {logout} = useContext(UserContext);
     useEffect(() =>  logout());
 
