@@ -65,6 +65,10 @@ const UpdateCourse = (props) => {
                     if (response.status === 400) {
                         await setErrorState({ data: [await response.json()] })
                     }
+                    else if(response.status === 403)
+                    {
+                        props.history.push("/forbidden");
+                    }
                     else {
                         props.history.push("/error");
                     }
