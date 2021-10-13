@@ -37,7 +37,6 @@ const UpdateCourse = (props) => {
             }
             else
             {
-                console.log("noway")
                 props.history.push("/error");
             }
         })
@@ -63,7 +62,7 @@ const UpdateCourse = (props) => {
             .then(async response => {
                 if (!response.ok) {
                     if (response.status === 400) {
-                        await setErrorState({ data: [await response.json()] })
+                        await setErrorState({ data: await response.json() })
                     }
                     else if(response.status === 403)
                     {
